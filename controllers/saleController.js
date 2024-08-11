@@ -25,11 +25,13 @@ router.post('/', async (req, res) => {
     await product.save();
 
     const totalPrice = product.price * quantity;
+    const totalCost = product.costPrice * quantity; // Calcule le coût total
 
     const sale = new Sale({
       product: productId,
       quantity,
       totalPrice,
+      totalCost, // Enregistre le coût total de la vente
       server: serverId,
       table,
     });

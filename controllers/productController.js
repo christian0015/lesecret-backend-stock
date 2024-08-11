@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 
 // Route pour ajouter la quantité d'un produit
 router.post('/update-quantity', async (req, res) => {
-  const { productId, quantity } = req.body;
+  const { productId, quantity, costPrice } = req.body; // Ajout de costPrice
   
   try {
     if (isNaN(quantity) || quantity < 0) {
@@ -28,6 +28,12 @@ router.post('/update-quantity', async (req, res) => {
     }
 
     product.quantity += quantity;
+
+    // Si un costPrice est fourni, on met à jour le prix de revient
+    if (costPrice && !isNaN(costPrice)) {
+      product.costPrice = costPrice;
+    }
+
     await product.save();
 
     // Enregistre l'approvisionnement dans le modèle Supply
@@ -37,7 +43,7 @@ router.post('/update-quantity', async (req, res) => {
     });
     await supply.save();
 
-    res.status(200).json({ message: 'Quantity updated successfully', product });
+    res.status(200).json({ message: 'Quantity and cost price updated successfully', product });
   } catch (error) {
     res.status(500).json({ message: 'Error updating quantity', error });
   }
