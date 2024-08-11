@@ -194,12 +194,15 @@ const seedData = async () => {
 };
 
 // Exécuter le script
-seedData();
+// seedData();
 
 
-const PORT = process.env.PORT || 5000;
+// const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+// app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
 
 
 // const express = require('express');
