@@ -6,19 +6,19 @@ const config = require('../config/config');
 const authMiddleware = async (req, res, next) => {
 
   // Récupère les données utilisateur de l'en-tête (si envoyé)
-  const userHeader = req.header('User');console.log('userHeader:', userHeader);
-  const userFromHeader = userHeader ? JSON.parse(userHeader) : null;
-  console.log('User Data from Header:', userFromHeader);
+  // const userHeader = req.header('User');console.log('userHeader:', userHeader);
+  // const userFromHeader = userHeader ? JSON.parse(userHeader) : null;
+  // console.log('User Data from Header:', userFromHeader);
 
 
   // Récupère le token de l'en-tête Authorization
-  console.log('Authorization Header:', req.header('Authorization'));
+  // console.log('Authorization Header:', req.header('Authorization'));
   // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmI3Mzk4MzExZGI5YWJhZjEwOWUzZGUiLCJpYXQiOjE3MjMyODQwMzV9.ryjGtvm1VkMJnsA2MWCkABCk9wOjc1qJiQcRhtMwr_o';
   const token = req.header('Authorization') ? req.header('Authorization').replace('Bearer ', '') : null;
   console.log('Token:', token); // Log le token pour vérifier sa présence
 
   if (!token) { 
-    console.log('Token n"est pas:', token);
+    // console.log('Token n"est pas:', token);
     return res.status(401).send({ error: 'No token provided.' });
   }
 

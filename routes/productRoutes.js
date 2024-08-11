@@ -3,8 +3,13 @@ const router = express.Router();
 const productController = require('../controllers/productController');
 const { authMiddleware, gerantMiddleware } = require('../middleware/authMiddleware');
 
-router.get('/', authMiddleware, productController);
-router.get('/getSupply', authMiddleware, productController);
-router.post('/update-quantity', authMiddleware, gerantMiddleware, productController);
+router.get('/', productController);
+router.get('/getSupply', productController);
+router.post('/update-quantity', productController);
 
 module.exports = router;
+
+
+// router.get('/', authMiddleware, productController);
+// router.get('/getSupply', authMiddleware, productController);
+// router.post('/update-quantity', authMiddleware, gerantMiddleware, productController);

@@ -5,7 +5,7 @@ require('dotenv').config();
 app.use(cors());
 // const cors = require('cors');
 app.use(cors({
-  origin: 'http://localhost:3000', // ou l'URL correcte du frontend
+  origin: '*', // ou l'URL correcte du frontend
   allowedHeaders: ['Authorization', 'Content-Type'],
 }));
 
@@ -31,7 +31,6 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
-app.use('/api/', require('./routes/authRoutes'));
 app.use('/api/products', require('./routes/productRoutes'));
 app.use('/api/sales', require('./routes/saleRoutes'));
 
@@ -47,107 +46,121 @@ app.use((err, req, res, next) => {
 });
 
 
-const seedData = async () => {
-  try {
-    // await User.deleteMany({});
-    await Product.deleteMany({});
-    await Sale.deleteMany({});
-    await Supply.deleteMany({});
+// const seedData = async () => {
+//   try {
+//     await User.deleteMany({});
+//     await Product.deleteMany({});
+//     await Sale.deleteMany({});
+//     await Supply.deleteMany({});
 
-    // const admin = new User({
-    //   username: 'admin',
-    //   email: 'admin@gmail.com',
-    //   password: 'adminpassword',
-    //   role: 'admin',
-    // });
+//     const admin = new User({
+//       username: 'admin',
+//       email: 'admin@gmail.com',
+//       password: 'adminpassword',
+//       role: 'admin',
+//     });
 
-    // const user1 = new User({
-    //   username: 'user1',
-    //   email: 'user1@gmail.com',
-    //   password: 'user1password',
-    //   role: 'gerant',
-    // });
+//     const user1 = new User({
+//       username: 'user1',
+//       email: 'user1@gmail.com',
+//       password: 'user1password',
+//       role: 'gerant',
+//     });
 
-    // const user2 = new User({
-    //   username: 'user2',
-    //   email: 'user2@gmail.com',
-    //   password: 'user2password',
-    //   role: 'serveur',
-    // });
+//     const user2 = new User({
+//       username: 'user2',
+//       email: 'user2@gmail.com',
+//       password: 'user2password',
+//       role: 'serveur',
+//     });
 
-    // await admin.save();
-    // await user1.save();
-    // await user2.save();
+//     await admin.save();
+//     await user1.save();
+//     await user2.save();
 
-    const drink1 = new Product({
-      name: 'Bière Locale',
-      category: 'Boissons Locales',
-      price: 5.00,
-    });
+//     const drink1 = new Product({
+//       name: 'Coca',
+//       category: 'Boissons Locales',
+//       price: 5.00,
+//     });
 
-    const drink2 = new Product({
-      name: 'Champagne Brut',
-      category: 'Champagnes',
-      price: 50.00,
-    });
+//     const drink2 = new Product({
+//       name: 'Champagne Brut',
+//       category: 'Champagnes',
+//       price: 50.00,
+//     });
 
-    await drink1.save();
-    console.log('Bière Locale créée');
-    await drink2.save();
-    console.log('Champagne Brut créé');
+//     const drink3 = new Product({
+//       name: 'Fanta',
+//       category: 'Boissons Locales',
+//       price: 5.00,
+//     });
 
-    // Créer des approvisionnements par défaut
-    const supply1 = new Supply({
-      product: drink1._id,
-      quantity: 100,
-    });
-    const supply2 = new Supply({
-      product: drink2._id,
-      quantity: 50,
-    });
-    // Sauvegarder les approvisionnements
-    await supply1.save();
-    console.log('Approvisionnement 1 enregistré');
-    await supply2.save();
-    console.log('Approvisionnement 2 enregistré');
-    // Mettre à jour la quantité des produits
-    drink1.quantity += 100;
-    await drink1.save();
-    drink2.quantity += 50;
-    await drink2.save();
-  console.log('Quantités mises à jour');
+//     const drink4 = new Product({
+//       name: 'Sprite',
+//       category: 'Boissons Locales',
+//       price: 5.00,
+//     });
 
-    // // Créer des ventes par défaut
-    // const sale1 = new Sale({
-    //   product: drink1._id,
-    //   quantity: 2,
-    //   totalPrice: drink1.price * 2,
-    //   server: user2._id,
-    //   table: 'Table 1',
-    // });
-    // const sale2 = new Sale({
-    //   product: drink2._id,
-    //   quantity: 1,
-    //   totalPrice: drink2.price * 1,
-    //   server: user2._id,
-    //   table: 'Table 2',
-    // });
-    // // Sauvegarder les ventes
-    // await sale1.save();
-    // console.log('Vente 1 enregistrée');
-    // await sale2.save();
-    // console.log('Vente 2 enregistrée');
+//     await drink1.save();
+//     await drink2.save();
+//     await drink3.save();
+//     await drink4.save();
+//     console.log('Bière Locale créée');
+//     console.log('Champagne Brut créé');
 
-    console.log('Données insérées avec succès !');
-  } catch (error) {
-    console.error('Erreur lors de l’insertion des données :', error);
-  } finally {
-    // mongoose.connection.close();
-  }
-};
+//     // Créer des approvisionnements par défaut
+//     const supply1 = new Supply({
+//       product: drink1._id,
+//       quantity: 100,
+//     });
+//     const supply2 = new Supply({
+//       product: drink2._id,
+//       quantity: 50,
+//     });
+//     // Sauvegarder les approvisionnements
+//     await supply1.save();
+//     console.log('Approvisionnement 1 enregistré');
+//     await supply2.save();
+//     console.log('Approvisionnement 2 enregistré');
+//     // Mettre à jour la quantité des produits
+//     drink1.quantity += 100;
+//     await drink1.save();
+//     drink2.quantity += 50;
+//     await drink2.save();
+//   console.log('Quantités mises à jour');
 
-// Exécuter le script
-seedData();
+//     // Créer des ventes par défaut
+//     const sale1 = new Sale({
+//       product: drink1._id,
+//       quantity: 2,
+//       totalPrice: drink1.price * 2,
+//       server: user2._id,
+//       table: 'Table 1',
+//     });
+//     const sale2 = new Sale({
+//       product: drink2._id,
+//       quantity: 1,
+//       totalPrice: drink2.price * 1,
+//       server: user2._id,
+//       table: 'Table 2',
+//     });
+//     // Sauvegarder les ventes
+//     await sale1.save();
+//     console.log('Vente 1 enregistrée');
+//     await sale2.save();
+//     console.log('Vente 2 enregistrée');
+
+//     console.log('Données insérées avec succès !');
+//   } catch (error) {
+//     console.error('Erreur lors de l’insertion des données :', error);
+//   } finally {
+//     // mongoose.connection.close();
+//   }
+// };
+
+// // Exécuter le script
+// seedData();
 
 
 const PORT = process.env.PORT || 5000;

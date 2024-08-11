@@ -7,6 +7,7 @@ router.post('/login', authController.login);
 router.post('/register', authController.register);
 
 // Route pour obtenir les informations de l'utilisateur connecté
+router.get('/servers', authController.getAllUserProfile);
 router.get('/me', authController.getUserProfile);
 
 module.exports = router;
