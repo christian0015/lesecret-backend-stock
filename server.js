@@ -178,7 +178,7 @@ const seedData = async () => {
 };
 
 // Exécuter le script
-seedData();
+// seedData();
 
 
 const PORT = process.env.PORT || 5000;
