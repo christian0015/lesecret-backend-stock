@@ -48,15 +48,15 @@ app.use((err, req, res, next) => {
 
 const seedData = async () => {
   try {
-    // await User.deleteMany({});
-    // await Product.deleteMany({});
-    // await Vente.deleteMany({});
-    // await Historique.deleteMany({});
+    await User.deleteMany({});
+    await Product.deleteMany({});
+    await Vente.deleteMany({});
+    await Historique.deleteMany({});
 
     const admin = new User({
       username: 'Djimi',
-      email: 'Djimi@gmail.com',
-      password: 'Djimipassword',
+      email: 'djimi@gmail.com',
+      password: 'Djimi',
       role: 'admin',
     });
 
@@ -178,7 +178,7 @@ const seedData = async () => {
 };
 
 // Exécuter le script
-// seedData();
+seedData();
 
 
 const PORT = process.env.PORT || 5000;
