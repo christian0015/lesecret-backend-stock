@@ -4,7 +4,7 @@ const productController = require('../controllers/productController');
 const { authMiddleware, gerantMiddleware } = require('../middleware/authMiddleware');
 
 router.get('/', productController);
-router.get('/getSupply', productController);
+router.get('/getHistorique', productController);
 router.post('/update-quantity', productController);
 
 module.exports = router;

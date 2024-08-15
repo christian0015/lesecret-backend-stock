@@ -14,8 +14,8 @@ const config = require('./config/config'); // Assure-toi que le chemin est corre
 
 const User = require('./models/User');
 const Product = require('./models/Product');
-const Sale = require('./models/Sale');
-const Supply = require('./models/Supply');
+const Vente = require('./models/Vente');
+const Historique = require('./models/Historique');
 
 // Connexion à MongoDB
 mongoose.connect(config.mongoURI, {
@@ -32,7 +32,7 @@ app.use(express.json());
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/products', require('./routes/productRoutes'));
-app.use('/api/sales', require('./routes/saleRoutes'));
+app.use('/api/ventes', require('./routes/venteRoutes'));
 
 // Erreur 404
 app.use((req, res, next) => {
@@ -48,35 +48,19 @@ app.use((err, req, res, next) => {
 
 const seedData = async () => {
   try {
-    await User.deleteMany({});
-    await Product.deleteMany({});
-    await Sale.deleteMany({});
-    await Supply.deleteMany({});
+    // await User.deleteMany({});
+    // await Product.deleteMany({});
+    // await Vente.deleteMany({});
+    // await Historique.deleteMany({});
 
     const admin = new User({
-      username: 'admin',
-      email: 'admin@gmail.com',
-      password: 'adminpassword',
+      username: 'Djimi',
+      email: 'Djimi@gmail.com',
+      password: 'Djimipassword',
       role: 'admin',
     });
 
-    const user1 = new User({
-      username: 'gerant',
-      email: 'gerant@gmail.com',
-      password: 'gerantpassword',
-      role: 'gerant',
-    });
-
-    const user2 = new User({
-      username: 'serveur',
-      email: 'serveur@gmail.com',
-      password: 'serveurpassword',
-      role: 'serveur',
-    });
-
     await admin.save();
-    await user1.save();
-    await user2.save();
 
     const drink1 = new Product({
       name: 'Coca',
@@ -123,33 +107,33 @@ const seedData = async () => {
     console.log('Liqueur créée');
 
     // Créer des approvisionnements par défaut
-    const supply1 = new Supply({
+    const historique1 = new Historique({
       product: drink1._id,
       quantity: 100,
     });
-    const supply2 = new Supply({
+    const historique2 = new Historique({
       product: drink2._id,
       quantity: 100,
     });
-    const supply3 = new Supply({
+    const historique3 = new Historique({
       product: drink3._id,
       quantity: 100,
     });
-    const supply4 = new Supply({
+    const historique4 = new Historique({
       product: drink4._id,
       quantity: 50,
     });
-    const supply5 = new Supply({
+    const historique5 = new Historique({
       product: drink5._id,
       quantity: 30,
     });
     
     // Sauvegarder les approvisionnements
-    await supply1.save();
-    await supply2.save();
-    await supply3.save();
-    await supply4.save();
-    await supply5.save();
+    await historique1.save();
+    await historique2.save();
+    await historique3.save();
+    await historique4.save();
+    await historique5.save();
     console.log('Approvisionnements enregistrés');
     // Mettre à jour la quantité des produits
     drink1.quantity += 100;
@@ -165,24 +149,24 @@ const seedData = async () => {
   console.log('Quantités mises à jour');
 
     // Créer des ventes par défaut
-    const sale1 = new Sale({
+    const vente1 = new Vente({
       product: drink1._id,
       quantity: 2,
       totalPrice: drink1.price * 2,
-      server: user2._id,
-      table: 'Table 1',
+      server: admin,
+      table: '1',
     });
-    const sale2 = new Sale({
+    const vente2 = new Vente({
       product: drink2._id,
       quantity: 1,
       totalPrice: drink2.price * 1,
-      server: user2._id,
-      table: 'Table 2',
+      server: admin,
+      table: '2',
     });
     // Sauvegarder les ventes
-    await sale1.save();
+    await vente1.save();
     console.log('Vente 1 enregistrée');
-    await sale2.save();
+    await vente2.save();
     console.log('Vente 2 enregistrée');
 
     console.log('Données insérées avec succès !');

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../models/Product'); // Assure-toi que le chemin est correct
-const Sale = require('../models/Sale'); // Assure-toi que le chemin est correct
+const Vente = require('../models/Vente'); // Assure-toi que le chemin est correct
 
 // Route pour enregistrer une vente
 router.post('/', async (req, res) => {
@@ -27,7 +27,7 @@ router.post('/', async (req, res) => {
     const totalPrice = product.price * quantity;
     const totalCost = product.costPrice * quantity; // Calcule le coût total
 
-    const sale = new Sale({
+    const vente = new Vente({
       product: productId,
       quantity,
       totalPrice,
@@ -36,21 +36,21 @@ router.post('/', async (req, res) => {
       table,
     });
 
-    await sale.save();
+    await vente.save();
 
-    res.status(201).json({ message: 'Sale recorded successfully', sale });
+    res.status(201).json({ message: 'Vente recorded successfully', vente });
   } catch (error) {
-    res.status(500).json({ message: 'Error recording sale', error });
+    res.status(500).json({ message: 'Error recording vente', error });
   }
 });
 
 // Route pour obtenir toutes les ventes
 router.get('/', async (req, res) => {
   try {
-    const sales = await Sale.find().populate('product').populate('server');
-    res.status(200).json(sales);
+    const ventes = await Vente.find().populate('product').populate('server');
+    res.status(200).json(ventes);
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching sales', error });
+    res.status(500).json({ message: 'Error fetching ventes', error });
   }
 });
 

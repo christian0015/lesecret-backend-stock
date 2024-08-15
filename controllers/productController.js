@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../models/Product'); // Assure-toi que le chemin est correct
-const Supply = require('../models/Supply');
+const Historique = require('../models/Historique');
 
 // Route pour obtenir tous les produits
 router.get('/', async (req, res) => {
@@ -36,12 +36,12 @@ router.post('/update-quantity', async (req, res) => {
 
     await product.save();
 
-    // Enregistre l'approvisionnement dans le modèle Supply
-    const supply = new Supply({
+    // Enregistre l'approvisionnement dans le modèle Historique
+    const historique = new Historique({
       product: productId,
       quantity,
     });
-    await supply.save();
+    await historique.save();
 
     res.status(200).json({ message: 'Quantity and cost price updated successfully', product });
   } catch (error) {
@@ -50,9 +50,9 @@ router.post('/update-quantity', async (req, res) => {
 });
 
 // Route pour obtenir l'historique des approvisionnements
-router.get('/getSupply', async (req, res) => {
+router.get('/getHistorique', async (req, res) => {
   try {
-    const supplies = await Supply.find().populate('product');
+    const supplies = await Historique.find().populate('product');
     res.status(200).json(supplies);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching supplies', error });

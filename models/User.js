@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role: { type: String, required: true, enum: ['admin', 'gerant', 'serveur'] },
-});
+}, { collection: 'lesecretusers' }); // Nom personnalisé de la collection
 
 userSchema.pre('save', async function (next) {
   if (this.isModified('password')) {
